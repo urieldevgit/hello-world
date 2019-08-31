@@ -7,7 +7,7 @@ pool:
 variables:
   resourceGroup: 'microservices'
   containerName: 'hello-world-container-paco'
-  imageName: 'devs4j/hello-world-maven:'
+  imageName: 'devs4j/hello-world-maven'
   dnsName: 'hello-world-container-paco123'
 
 steps:
@@ -51,7 +51,7 @@ steps:
     connectedServiceNameARM: 'devs4j-resourcemanager'
     scriptLocation: 'inlineScript'
     inlineScript: |
-      az container delete --resource-group $(resourceGroup) --name $(containerName)
+      az container delete --resource-group $(resourceGroup) --name $(containerName) --yes
       az container create --resource-group $(resourceGroup) --name $(containerName) --image $(imageName):$(version) --dns-name-label $(dnsName) --ports 8080
       az container show --resource-group $(resourceGroup) --name $(containerName) --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" --out table
 
