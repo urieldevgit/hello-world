@@ -5,10 +5,10 @@ pool:
   vmImage: 'ubuntu-latest'
   
 variables:
-  resourceGroup: microservices
-  containerName: hello-world-container-paco
-  imageName: devs4j/hello-world-maven:
-  dnsName: hello-world-container-paco123
+  resourceGroup: 'microservices'
+  containerName: 'hello-world-container-paco'
+  imageName: 'devs4j/hello-world-maven:'
+  dnsName: 'hello-world-container-paco123'
 
 steps:
 - script: echo Hello, world!
