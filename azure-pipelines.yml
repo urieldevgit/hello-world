@@ -7,7 +7,7 @@ pool:
 variables:
   resourceGroup: 'microservices'
   containerName: 'hello-world-container-paco'
-  imageName: 'devs4j/hello-world-maven'
+  imageName: 'devs4j/hello-world'
   dnsName: 'hello-world-container-paco123'
 
 steps:
