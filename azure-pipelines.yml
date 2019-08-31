@@ -50,3 +50,12 @@ steps:
     repository: $(imageName)
     tags: |
       $(version)
+
+- task: AzureCLI@1
+  inputs:
+    connectedServiceNameARM: 'AzureCloudTest'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az container delete --resource-group $(resourceGroup) --name $(containerName) --yes
+      az container create --resource-group $(resourceGroup) --name $(containerName) --image $(imageName):$(version) --dns-name-label $(dnsName) --ports 8080
+      az container show --resource-group $(resourceGroup) --name $(containerName) --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" --out table
