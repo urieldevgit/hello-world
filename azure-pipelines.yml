@@ -42,4 +42,11 @@ steps:
   inputs:
     command: login
     containerRegistry: docker-hub
-    
+
+- task: Docker@2
+  displayName: Build and Push
+  inputs:
+    command: buildAndPush
+    repository: $(imageName)
+    tags: |
+      $(version)
