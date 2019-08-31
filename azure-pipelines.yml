@@ -1,13 +1,14 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
 pool:
   vmImage: 'ubuntu-latest'
+  
+variables:
+  resourceGroup: microservices
+  containerName: hello-world-container-paco
+  imageName: devs4j/hello-world-maven:
+  dnsName: hello-world-container-paco123
 
 steps:
 - script: echo Hello, world!
@@ -44,3 +45,13 @@ steps:
     repository: devs4j/hello-world
     tags: |
       $(version)
+      
+- task: AzureCLI@1
+  inputs:
+    azureSubscription: 
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az container delete --resource-group $(resourceGroup) --name $(containerName)
+      az container create --resource-group $(resourceGroup) --name $(containerName) --image $(imageName):$(version) --dns-name-label $(dnsName) --ports 8080
+      az container show --resource-group $(resourceGroup) --name $(containerName) --query "{FQDN:ipAddress.fqdn,ProvisioningState:provisioningState}" --out table
+
