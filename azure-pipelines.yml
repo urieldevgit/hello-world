@@ -8,12 +8,6 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-  
-variables:
-  dockerRegistryServiceConnection: 'docker-hub'
-  imageRepository: 'devs4j/hello-world'
-  dockerfilePath: '.'
-  tag: '$(Build.BuildId)'  
 
 steps:
 - script: echo Hello, world!
@@ -30,11 +24,15 @@ steps:
     goals: 'package'
 
 - task: Docker@2
-  displayName: Build and push an image to container registry
+  displayName: Login to Docker Hub
+  inputs:
+    command: login
+    containerRegistry: docker-hub  
+
+- task: Docker@2
+  displayName: Build and Push
   inputs:
     command: buildAndPush
-    repository: $(imageRepository)
-    dockerfile: $(dockerfilePath)
-    containerRegistry: $(dockerRegistryServiceConnection)
+    repository: devs4j/hello-world
     tags: |
-          $(tag)
+      '$(Build.BuildId)'  
