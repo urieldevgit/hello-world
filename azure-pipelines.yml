@@ -8,6 +8,12 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
+  
+variables:
+  dockerRegistryServiceConnection: 'docker-hub'
+  imageRepository: 'devs4j/hello-world'
+  dockerfilePath: '.'
+  tag: '$(Build.BuildId)'  
 
 steps:
 - script: echo Hello, world!
@@ -22,3 +28,13 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+
+- task: Docker@2
+  displayName: Build and push an image to container registry
+  inputs:
+    command: buildAndPush
+    repository: $(imageRepository)
+    dockerfile: $(dockerfilePath)
+    containerRegistry: $(dockerRegistryServiceConnection)
+    tags: |
+          $(tag)
