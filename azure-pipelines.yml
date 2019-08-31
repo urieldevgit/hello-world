@@ -8,9 +8,9 @@ trigger:
 
 variables:
   resourceGroup: 'microservices'
-  containerName: 'hello-world-pipeline-6'
-  imageName: 'devs4j/hello-world-pipeline-6'
-  dnsName: 'hello-world-uriel-pipeline-6-4693'
+  containerName: 'hello-world-pipeline-7'
+  imageName: 'devs4j/hello-world-pipeline-7'
+  dnsName: 'hello-world-uriel-pipeline-7-4693'
 
 pool:
   vmImage: 'ubuntu-latest'
