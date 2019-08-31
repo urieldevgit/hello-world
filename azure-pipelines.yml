@@ -13,7 +13,6 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-steps:
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
